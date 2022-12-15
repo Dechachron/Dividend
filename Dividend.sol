@@ -7,6 +7,21 @@ import "github.com/Dechachron/Ownable/blob/main/Ownable.sol";
 import "github.com/Dechachron/Library-SafeMath/blob/main/Library%20safemath.sol";
 import "github.com/Dechachron/context-IBEP20-IBEP20Metadata/blob/main/context-ibep20-ibep20metadata.sol";
 
+interface DividendPayingTokenInterface 
+{
+  function dividendOf(address _owner) external view returns(uint256);
+  function withdrawDividend() external;
+  event DividendsDistributed(
+    address indexed from,
+    uint256 weiAmount
+  );
+
+  event DividendWithdrawn(
+    address indexed to,
+    uint256 weiAmount
+  );
+}
+
 interface DividendPayingTokenOptionalInterface {
   function withdrawableDividendOf(address _owner) external view returns(uint256);
   function withdrawnDividendOf(address _owner) external view returns(uint256);
@@ -28,7 +43,8 @@ contract DividendPayingToken is BEP20, Ownable, DividendPayingTokenInterface, Di
   constructor(string memory _name, string memory _symbol) BEP20(_name, _symbol) {
 
   }
-  
+
+
   function distributeBUSDDividends(uint256 amount) public onlyOwner{
     require(totalSupply() > 0);
 
@@ -41,8 +57,8 @@ contract DividendPayingToken is BEP20, Ownable, DividendPayingTokenInterface, Di
       totalDividendsDistributed = totalDividendsDistributed.add(amount);
     }
   }
-  
-function withdrawDividend() public virtual override {
+
+  function withdrawDividend() public virtual override {
     _withdrawDividendOfUser(payable(msg.sender));
   }
 
@@ -69,8 +85,9 @@ function withdrawDividend() public virtual override {
   function dividendOf(address _owner) public view override returns(uint256) {
     return withdrawableDividendOf(_owner);
   }
-  
-function withdrawableDividendOf(address _owner) public view override returns(uint256) {
+
+
+  function withdrawableDividendOf(address _owner) public view override returns(uint256) {
     return accumulativeDividendOf(_owner).sub(withdrawnDividends[_owner]);
   }
 
@@ -90,8 +107,8 @@ function withdrawableDividendOf(address _owner) public view override returns(uin
     magnifiedDividendCorrections[from] = magnifiedDividendCorrections[from].add(_magCorrection);
     magnifiedDividendCorrections[to] = magnifiedDividendCorrections[to].sub(_magCorrection);
   }
-  
-function _mint(address account, uint256 value) internal override {
+
+  function _mint(address account, uint256 value) internal override {
     super._mint(account, value);
 
     magnifiedDividendCorrections[account] = magnifiedDividendCorrections[account]
