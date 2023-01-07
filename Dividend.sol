@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "github.com/Dechachron/IBEP20-Interface/blob/main/IBEP20.sol";
-import "github.com/Dechachron/Abstract/blob/main/abstract.sol";
-import "github.com/Dechachron/Ownable/blob/main/Ownable.sol";
-import "github.com/Dechachron/Library-SafeMath/blob/main/Library%20safemath.sol";
-import "github.com/Dechachron/context-IBEP20-IBEP20Metadata/blob/main/context-ibep20-ibep20metadata.sol";
+import"github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/token/ERC20/IERC20Upgradeable.sol";
+import"github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/utils/ContextUpgradeable.sol";
+import"github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/access/OwnableUpgradeable.sol";
+import"github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/utils/math/SafeMathUpgradeable.sol";
+import"github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/token/ERC20/extensions/IERC20MetadataUpgradeable.sol";
+import"github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/proxy/utils/Initializable.sol";
+import"github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/proxy/utils/Initializable.sol";
 
 interface DividendPayingTokenInterface 
 {
